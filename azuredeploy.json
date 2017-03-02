@@ -45,7 +45,14 @@
       		"metadata": {
         		"description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       		}
-        }
+        },
+    	"SDWANOSVersion": {
+      		"type": "string",
+      		"defaultValue": "netscalersd-wanstandardedition",
+      		"metadata": {
+        		"description": "Netscaler SD-WAN Standard Edition VM version 9.2.0-89 beta edition."
+      		}
+    	}
   	},
 	
   	"variables": {
@@ -54,7 +61,6 @@
 
     	"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'sdwanimage')]",
     	"storageAccountType": "Standard_LRS",
-	"sku": "netscalersd-wanstandardedition",
 
     	"imagePublisher": "citrix",
     	"imageOffer": "netscaler-sd-wan",
@@ -269,13 +275,12 @@
           			"imageReference": {
             			"publisher": "[variables('imagePublisher')]",
             			"offer": "[variables('imageOffer')]",
-            			"sku": "[parameters('sku')]",
+            			"sku": "[parameters('SDWANOSVersion')]",
             			"version": "latest"
 					},
-				"osDisk": {                           		
-                            		"caching": "ReadWrite",
-                            		"createOption": "FromImage"
-                        	}
+					"osDisk": {
+            			"createOption": "FromImage"
+					}
 				}
 			}
 		}
