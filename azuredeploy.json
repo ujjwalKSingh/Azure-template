@@ -3,12 +3,6 @@
   	"contentVersion": "1.0.0.0",
   	
 	"parameters": {
-		 "storageAccountName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of storage account"
-            }
-        },
    		"adminUsername": {
       			"type": "string",
       			"defaultValue": "sdwanuser",
@@ -51,14 +45,7 @@
       		"metadata": {
         		"description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       		}
-        },
-    	"SDWANOSVersion": {
-      		"type": "string",
-      		"defaultValue": "netscalersd-wanstandardedition",
-      		"metadata": {
-        		"description": "Netscaler SD-WAN Standard Edition VM version 9.2.0-89 beta edition."
-      		}
-    	}
+        }
   	},
 	
   	"variables": {
@@ -67,6 +54,7 @@
 
     	"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'sdwanimage')]",
     	"storageAccountType": "Standard_LRS",
+	"sku": "netscalersd-wanstandardedition",
 
     	"imagePublisher": "citrix",
     	"imageOffer": "netscaler-sd-wan",
@@ -281,14 +269,10 @@
           			"imageReference": {
             			"publisher": "[variables('imagePublisher')]",
             			"offer": "[variables('imageOffer')]",
-            			"sku": "[parameters('SDWANOSVersion')]",
+            			"sku": "[parameters('sku')]",
             			"version": "latest"
 					},
-				"osDisk": {
-                           		 "name": "osdisk",
-                            		"vhd": {
-                               			 "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/vhds/','osdisk', '.vhd')]"
-                            		},
+				"osDisk": {                           		
                             		"caching": "ReadWrite",
                             		"createOption": "FromImage"
                         	}
